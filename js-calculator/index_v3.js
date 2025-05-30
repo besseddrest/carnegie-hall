@@ -1,0 +1,160 @@
+var CalculatorV3 = /** @class */ (function () {
+    function CalculatorV3() {
+        this.lcd = null;
+        this.operators = {
+            "^": 1,
+            "*": 2,
+            "/": 2,
+            "+": 3,
+            "-": 3,
+        };
+        this.stack = [];
+        this.queue = [];
+        this.num = "";
+        this.lcd = document.getElementById("calc-lcd");
+        this.justSolved = false;
+    }
+    CalculatorV3.prototype.solve = function () {
+        this.flushNum();
+        console.log("QUEUE: ", this.queue);
+        console.log("STACK: ", this.stack);
+        while (this.stack.length > 0) {
+            this.queue.push(this.stack.pop());
+        }
+        var results = [];
+        for (var _i = 0, _a = this.queue; _i < _a.length; _i++) {
+            var item = _a[_i];
+            if (!isNaN(parseFloat(item))) {
+                results.push(parseFloat(item));
+            }
+            else {
+                var right = results.pop();
+                var left = results.pop();
+                var result = void 0;
+                switch (item) {
+                    case "+":
+                        result = left + right;
+                        break;
+                    case "-":
+                        result = left - right;
+                        break;
+                    case "*":
+                        result = left * right;
+                        break;
+                    case "/":
+                        result = left / right;
+                        break;
+                    case "^":
+                        result = Math.pow(left, right);
+                        break;
+                    default:
+                        throw new Error("Unknown operator ".concat(item));
+                }
+                results.push(result);
+            }
+        }
+        var final = results.pop();
+        if (this.lcd)
+            this.lcd.value = final.toString();
+        this.justSolved = true;
+        this.queue = [];
+        this.stack = []; // to be sure
+        return final;
+    };
+    CalculatorV3.prototype.handleInput = function (val) {
+        if (this.justSolved) {
+            this.handleNewInput(val);
+        }
+        switch (val) {
+            case "clear":
+                this.clearDisplay();
+                break;
+            case "=":
+                this.solve();
+                break;
+            case ")":
+                this.handleParens();
+                break;
+            case "(":
+                this.updateDisplay(val);
+                this.stack.push(val);
+                break;
+            default:
+                this.handleValue(val);
+                break;
+        }
+    };
+    CalculatorV3.prototype.handleNewInput = function (val) {
+        if (this.lcd) {
+            console.log("last:", this.lcd.value);
+            // just solved is true
+            if (isNaN(parseInt(val))) {
+                this.num = this.lcd.value;
+            }
+            else {
+                this.lcd.value = "";
+            }
+            this.justSolved = false;
+        }
+    };
+    CalculatorV3.prototype.updateDisplay = function (val) {
+        if (this.lcd)
+            this.lcd.value += val;
+    };
+    CalculatorV3.prototype.clearDisplay = function () {
+        if (this.lcd)
+            this.lcd.value = "";
+        this.stack = [];
+        this.queue = [];
+        this.num = "";
+    };
+    CalculatorV3.prototype.flushNum = function () {
+        if (this.num !== "") {
+            this.queue.push(this.num);
+            this.num = "";
+        }
+    };
+    CalculatorV3.prototype.handleValue = function (val) {
+        this.updateDisplay(val);
+        // if this is a number
+        if (!isNaN(parseInt(val)) || val === ".") {
+            this.num += val;
+        }
+        else {
+            // operator
+            this.flushNum();
+            this.handleOperator(val);
+            this.stack.push(val);
+        }
+    };
+    CalculatorV3.prototype.handleOperator = function (val) {
+        do {
+            var head = this.stack.pop();
+            if (!head) {
+                break;
+            }
+            if (this.operators[head] < this.operators[val]) {
+                this.queue.push(head);
+            }
+            else {
+                this.stack.push(head);
+                break;
+            }
+        } while (this.operators.hasOwnProperty(this.stack[this.stack.length - 1]));
+    };
+    CalculatorV3.prototype.handleParens = function () {
+        this.flushNum();
+        do {
+            var head = this.stack.pop();
+            if (head === "(") {
+                break;
+            }
+            else {
+                if (head) {
+                    this.queue.push(head);
+                }
+            }
+        } while (this.stack.length > 0);
+    };
+    return CalculatorV3;
+}());

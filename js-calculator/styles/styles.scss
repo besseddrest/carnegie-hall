@@ -1,0 +1,36 @@
+body {
+    width: 100%;
+}
+
+.calc {
+    width: 300px;
+    margin: 0 auto;
+    border: 1px solid teal;
+
+    &__display {
+        grid-column: span 4;
+        height: 50px;
+        text-align: right;
+    }
+
+    &__buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 5px;
+    }
+
+    &__input,
+    &__solve {
+        font-size: 24px;
+        line-height: normal;
+        height: 50px;
+        display: block;
+        width: 100%;
+        border: 1px solid teal;
+        grid-column: span 1;
+
+        &--double {
+            grid-column: span 2;
+        }
+    }
+}

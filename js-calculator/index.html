@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+    <header>
+        <link href="./styles/styles.css" rel="stylesheet" />
+    </header>
+    <body>
+        <div class="calc__wrap">
+            <form class="calc">
+                <div class="calc__buttons">
+                    <input id="calc-lcd" class="calc__display" type="text" />
+                    <button
+                        id="calc-clear"
+                        type="button"
+                        class="calc__input calc__input--clear"
+                        value="clear"
+                    >
+                        AC
+                    </button>
+                    <button
+                        type="button"
+                        class="calc__input calc__input--flip"
+                        value="flip"
+                    >
+                        +/-
+                    </button>
+                    <button
+                        type="button"
+                        class="calc__input calc__input--percent"
+                        value="%"
+                    >
+                        %
+                    </button>
+                    <button
+                        type="button"
+                        class="calc__input calc__input--operator"
+                        value="/"
+                    >
+                        /
+                    </button>
+                    <button
+                        type="button"
+                        class="calc__input calc__input--num"
+                        value="7"
+                    >
+                        7
+                    </button>
+                    <button
+                        type="button"
+                        class="calc__input calc__input--num"
+                        value="8"
+                    >
+                        8
+                    </button>
+                    <button
+                        type="button"
+                        class="calc__input calc__input--num"
+                        value="9"
+                    >
+                        9
+                    </button>
+                    <button
+                        type="button"
+                        class="calc__input calc__input--operator"
+                        value="*"
+                    >
+                        x
+                    </button>
+                    <button
+                        type="button"
+                        class="calc__input calc__input--num"
+                        value="4"
+                    >
+                        4
+                    </button>
+                    <button
+                        type="button"
+                        class="calc__input calc__input--num"
+                        value="5"
+                    >
+                        5
+                    </button>
+                    <button
+                        type="button"
+                        class="calc__input calc__input--num"
+                        value="6"
+                    >
+                        6
+                    </button>
+                    <button
+                        type="button"
+                        class="calc__input calc__input--operator"
+                        value="-"
+                    >
+                        -
+                    </button>
+                    <button
+                        type="button"
+                        class="calc__input calc__input--num"
+                        value="1"
+                    >
+                        1
+                    </button>
+                    <button
+                        type="button"
+                        class="calc__input calc__input--num"
+                        value="2"
+                    >
+                        2
+                    </button>
+                    <button
+                        type="button"
+                        class="calc__input calc__input--num"
+                        value="3"
+                    >
+                        3
+                    </button>
+                    <button
+                        type="button"
+                        class="calc__input calc__input--operator"
+                        value="+"
+                    >
+                        +
+                    </button>
+                    <button
+                        type="button"
+                        class="calc__input calc__input--num calc__input--double"
+                        value="0"
+                    >
+                        0
+                    </button>
+                    <button
+                        type="button"
+                        class="calc__input calc__input--decimal"
+                        value="."
+                    >
+                        .
+                    </button>
+                    <button
+                        id="calc-solve"
+                        type="button"
+                        class="calc__solve calc__input--equals"
+                        value="="
+                    >
+                        =
+                    </button>
+                </div>
+            </form>
+        </div>
+        <script src="./index_v3.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                window.calc = new CalculatorV3();
+                document.querySelectorAll(".calc__input").forEach((btn) => {
+                    btn.addEventListener("click", (ev) => {
+                        window.calc.handleInput(ev.target.value);
+                    });
+                });
+
+                document
+                    .getElementById("calc-clear")
+                    .addEventListener("click", (ev) => {
+                        window.calc.clearDisplay();
+                    });
+
+                document
+                    .getElementById("calc-solve")
+                    .addEventListener("click", () => {
+                        window.calc.solve();
+                    });
+            });
+        </script>
+    </body>
+</html>

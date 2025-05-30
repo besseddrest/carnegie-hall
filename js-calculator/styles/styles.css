@@ -1,0 +1,33 @@
+body {
+  width: 100%;
+}
+
+.calc {
+  width: 300px;
+  margin: 0 auto;
+  border: 1px solid teal;
+}
+.calc__display {
+  grid-column: span 4;
+  height: 50px;
+  text-align: right;
+}
+.calc__buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+.calc__input, .calc__solve {
+  font-size: 24px;
+  line-height: normal;
+  height: 50px;
+  display: block;
+  width: 100%;
+  border: 1px solid teal;
+  grid-column: span 1;
+}
+.calc__input--double, .calc__solve--double {
+  grid-column: span 2;
+}
+
+/*# sourceMappingURL=styles.css.map */
